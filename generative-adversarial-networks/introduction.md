@@ -66,3 +66,14 @@ Francois Chollet then provide additional recommendations in his book:
 4. To reduce checkerboard pixel artifacts in the output image use a kernel size that is divisible by the stride when utilizing convolution or transposed convolution in both the generator and discriminator.
 5. If your adversarial loss rises dramatically while your discriminator loss falls to zero, try reducing the learning rate of the discriminator and incresing the dropout of the discriminator.
 
+Keep in mind that these are all just heuristics found to work in a number of situations — we’ll be using some of techniques suggested by both Radford et al. and Chollet, but not all of them. It is possible, and even probable, that the techniques listed here will not work on your GANs. Take the time now to set your expectations that you’ll likely be running orders of magnitude more experiments when tuning the hyperparameters of your GANs as compared to previous experiments in this book.
+
+## Summary
+We learned that GANs actually consist of two networks:
+1. A *generator* which resposnible for generating fake images
+2. A *discriminator* that tries to spot the synthetic images from the authentic ones
+
+By training both of these networks at the same time we can learn to generate very realistic output images.
+
+The problem is that training GANs can be *extremely* challenging, more so than *any* other architecture or methods. The reason GANs are notoriously hard to train is ude to the *evolving loss landscape* - with every step, our loss landscape changes slightly and is thus ever evolving. The evolving landscap is in stark contrast to other classification or regression tasks where the loss landsace is "fixed" and non-moving.
+
