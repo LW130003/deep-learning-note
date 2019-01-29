@@ -36,3 +36,26 @@ Edit: During test (or inference) time, the mean and the variance are fixed. They
 Luckily for us, the Tensorflow API already has all this math implemented in the **tf.layers.batch_normalization** layer.
 
 In order to add a batch normalization layer in your model, all you have to do is use the following code:
+```python
+import tensorflow as tf
+
+# ...
+
+is_train = tf.placeholder(tf.bool, name="is_train");
+
+# ...
+
+x_norm = tf.layers.batch_normalization(x, training=is_train)
+
+# ...
+
+update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+with tf.control_dependencies(update_ops):
+    train_op = optimizer.minimize(loss)
+```
+
+It is really important to get the update ops as stated in the Tensorflow documentation because in training time the moving variance and the moving mean of the layer have to be updated. If you don’t do this, batch normalization will not work and the network will not train as expected.
+
+It is also useful to declare a placeholder to tell the network if it is in training time or inference time (we already discussed which are the differences for train and test time).
+
+Notice that this layer has a lot more parameters (you can check them in the documentation), but these is the basic working code that you should use.
